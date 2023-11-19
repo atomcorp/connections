@@ -17,7 +17,12 @@ export const answers = [
   },
 ];
 
-export const startingBoard = [
+export type Board = {
+  connection: string;
+  words: string[];
+}[];
+
+export const startingBoard: Board = [
   {
     connection: "",
     words: ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
@@ -34,11 +39,4 @@ export const startingBoard = [
     connection: "",
     words: ["SLEET", "RACE CAR", "MOM", "NETS"],
   },
-];
-
-export const testBoard = [
-  ["JAZZ", "HAIL", "OPTION", "RAIN"],
-  ["SNOW", "KAYAK", "RACE CAR", "MOM"],
-  ["SLEET", "NETS", "LEVEL", "SHIFT"],
-  ["HEAT", "TAB", "BUCKS", "RETURN"],
 ];

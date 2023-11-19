@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { CSSProperties } from "react";
 import { LayoutGroup, motion, stagger, useAnimate } from "framer-motion";
 
-import { answers, startingBoard, testBoard } from "@/components/data";
+import { Board, answers, startingBoard } from "@/components/data";
 
 import css from "./Game.module.css";
 
@@ -17,7 +17,49 @@ const isConnection = (selectedWords: string[]) => {
   }
 };
 
-const rearrangeBoard = (isConnection: string, board: string[][]) => {};
+const updateBoard = (connection: string) => (formerBoard: Board) => {
+  const connectedWords = answers.find(
+    ({ answer }) => connection === answer
+  )?.words;
+  if (connectedWords) {
+    const connectedRows = formerBoard.filter((row) => row.connection);
+    const unConnectedRows = formerBoard.filter((row) => !row.connection);
+    const allRemainingWords = unConnectedRows
+      .map((row) => row.words)
+      .flat()
+      .filter((word) => !connectedWords.includes(word));
+
+    const nextUnconnectedRows = [];
+    const remainingRows = allRemainingWords.length / 4;
+    for (let index = 0; index < remainingRows; index++) {
+      const multiplier = index * 4;
+      nextUnconnectedRows.push({
+        connection: "",
+        words: [
+          allRemainingWords[0 + multiplier],
+          allRemainingWords[1 + multiplier],
+          allRemainingWords[2 + multiplier],
+          allRemainingWords[3 + multiplier],
+        ],
+      });
+    }
+    return [
+      ...connectedRows,
+      {
+        connection,
+        words: connectedWords,
+      },
+      ...nextUnconnectedRows,
+    ];
+  }
+  return formerBoard;
+};
+
+type Row = CSSProperties & {
+  "--row": number;
+  "--col": number;
+  "--color": string;
+};
 
 export default function Game() {
   const [scope, animate] = useAnimate();
@@ -41,7 +83,7 @@ export default function Game() {
       // bump up
       await animate(
         'button[aria-current="true"]',
-        { y: -10, zIndex: 1 },
+        { y: -10, zIndex: 3 },
         {
           delay: stagger(0.25, {
             ease: "linear",
@@ -60,46 +102,7 @@ export default function Game() {
           x: [-4, 5, -5, 4, -3, 1, 0],
         });
       } else {
-        setBoard((formerBoard) => {
-          const connectedWords = answers.find(
-            ({ answer }) => connection === answer
-          )?.words;
-          if (connectedWords) {
-            const connectedRows = formerBoard.filter((row) => row.connection);
-            const unConnectedRows = formerBoard.filter(
-              (row) => !row.connection
-            );
-
-            const allRemainingWords = unConnectedRows
-              .map((row) => row.words)
-              .flat()
-              .filter((word) => !connectedWords.includes(word));
-            const nextUnconnectedRows = [];
-            const remainingRows = allRemainingWords.length / 4;
-
-            for (let index = 0; index < remainingRows; index++) {
-              const multiple = index * 4;
-              nextUnconnectedRows.push({
-                connection: "",
-                words: [
-                  allRemainingWords[0 + multiple],
-                  allRemainingWords[1 + multiple],
-                  allRemainingWords[2 + multiple],
-                  allRemainingWords[3 + multiple],
-                ],
-              });
-            }
-            return [
-              ...connectedRows,
-              {
-                connection,
-                words: connectedWords,
-              },
-              ...nextUnconnectedRows,
-            ];
-          }
-          return formerBoard;
-        });
+        setBoard(updateBoard(connection));
       }
       setSelected([]);
     };
@@ -122,34 +125,62 @@ export default function Game() {
       </div>
       <LayoutGroup>
         <section ref={scope} className={css.board}>
-          {board.map((row) =>
-            row.words.map((word) => (
-              <motion.button
-                layoutId={word}
-                style={{
-                  zIndex: !!row.connection ? 1 : "initial",
-                }}
-                whileTap={{
-                  scale: 0.9,
-                  transition: {
-                    duration: 0.1,
-                    ease: "easeOut",
-                  },
-                }}
-                onClick={() => {
-                  if (!isGuessComplete) {
-                    onSelect(word);
+          {board.map((row, rowIndex) => (
+            <>
+              {row.words.map((word, colIndex) => {
+                const isSelected = selected.includes(word);
+                return (
+                  <motion.button
+                    layoutId={word}
+                    style={
+                      {
+                        zIndex: !!row.connection ? 1 : "initial",
+                        "--row": rowIndex + 1,
+                        "--col": colIndex + 1,
+                      } as Row
+                    }
+                    whileTap={{
+                      scale: !isSelected ? 0.9 : 1,
+                      transition: {
+                        duration: 0.1,
+                        ease: "easeOut",
+                      },
+                    }}
+                    onClick={() => {
+                      if (!isGuessComplete) {
+                        onSelect(word);
+                      }
+                    }}
+                    disabled={!!row.connection}
+                    aria-current={isSelected}
+                    className={css.word}
+                    key={word}
+                  >
+                    {word}
+                  </motion.button>
+                );
+              })}
+              {row.connection && (
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0, 1],
+                  }}
+                  transition={{ delay: 0.3 }}
+                  style={
+                    {
+                      "--row": rowIndex + 1,
+                      "--color": `--group-${rowIndex}-color`,
+                    } as Row
                   }
-                }}
-                disabled={!!row.connection}
-                aria-current={selected.includes(word)}
-                className={css.word}
-                key={word}
-              >
-                {word}
-              </motion.button>
-            ))
-          )}
+                  className={css.answer}
+                >
+                  <div className={css.connection}>{row.connection}</div>
+                  <div>{row.words.join(", ")}</div>
+                </motion.div>
+              )}
+            </>
+          ))}
         </section>
       </LayoutGroup>
     </main>

@@ -24,6 +24,8 @@
 }
 
 .word {
+  grid-row: var(--row);
+  grid-column: var(--col);
   aspect-ratio: 1;
   display: grid;
   place-content: center;
@@ -43,4 +45,44 @@
 
 .word[disabled] {
   background: turquoise;
+}
+
+.answer {
+  --group-0-color: #f9df6d;
+  --group-1-color: #a0c35a;
+  --group-2-color: #b0c4ef;
+  --group-3-color: #ba81c5;
+  grid-row: var(--row);
+  grid-column: 1 / -1;
+  z-index: 2;
+  border-radius: turquoise;
+  border-radius: 6px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.answer:nth-of-type(1) {
+  background: var(--group-0-color);
+  color: black;
+}
+
+.answer:nth-of-type(2) {
+  background: var(--group-1-color);
+  color: black;
+}
+
+.answer:nth-of-type(3) {
+  background: var(--group-2-color);
+  color: black;
+}
+
+.answer:nth-of-type(4) {
+  background: var(--group-3-color);
+  color: black;
+}
+
+.connection {
+  text-decoration: underline;
 }
