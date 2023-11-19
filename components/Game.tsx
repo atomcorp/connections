@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import css from "./Game.module.css";
@@ -20,15 +22,33 @@ const startingBoard = [
 ];
 
 export default function Game() {
+  const [selected, setSelected] = React.useState<string[]>([]);
+
+  const onSelect = (word: string) => {
+    if (selected.length < 4) {
+      setSelected([...selected, word]);
+    }
+    if (selected.includes(word)) {
+      setSelected(selected.filter((selectedWord) => selectedWord !== word));
+    }
+  };
+
   return (
     <main className={css.container}>
       <h1>Connections</h1>
       <section className={css.board}>
         {startingBoard.map((row, i) =>
           row.map((word) => (
-            <span className={css.word} key={word}>
+            <div
+              onClick={() => {
+                onSelect(word);
+              }}
+              aria-current={selected.includes(word)}
+              className={css.word}
+              key={word}
+            >
               {word}
-            </span>
+            </div>
           ))
         )}
       </section>
