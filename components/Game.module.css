@@ -3,8 +3,14 @@
   margin: 60px auto;
 }
 
+.title {
+  text-decoration: underline;
+  margin: 0 0 1rem;
+}
+
 .board {
-  border: 1px solid white;
+  border: 3px solid white;
+  border-radius: 6px;
   padding: 6px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -21,11 +27,14 @@
   aspect-ratio: 1;
   display: grid;
   place-content: center;
+  text-align: center;
   background: lightslategray;
   cursor: pointer;
   border-radius: 6px;
   font-weight: 700;
   color: black;
+  padding: 6px;
+  border: 0;
 }
 
 .word[aria-current="true"] {

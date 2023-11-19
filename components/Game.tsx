@@ -1,54 +1,90 @@
 "use client";
 
 import React from "react";
+import { motion, stagger, useAnimate } from "framer-motion";
+
+import { answers, startingBoard } from "@/components/data";
 
 import css from "./Game.module.css";
 
-const answers = {
-  "WET WEATHER": { level: 0, members: ["HAIL", "RAIN", "SLEET", "SNOW"] },
-  "NBA TEAMS": { level: 1, members: ["BUCKS", "HEAT", "JAZZ", "NETS"] },
-  "KEYBOARD KEYS": {
-    level: 2,
-    members: ["OPTION", "RETURN", "SHIFT", "TAB"],
-  },
-  PALINDROMES: { level: 3, members: ["KAYAK", "LEVEL", "MOM", "RACE CAR"] },
+const isConnection = (selectedWords: string[]) => {
+  const connection = answers.find((answer) =>
+    answer.words.every((word) => selectedWords.includes(word))
+  );
+
+  if (connection) {
+    return connection.answer;
+  }
 };
 
-const startingBoard = [
-  ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
-  ["HEAT", "TAB", "BUCKS", "RETURN"],
-  ["JAZZ", "HAIL", "OPTION", "RAIN"],
-  ["SLEET", "RACE CAR", "MOM", "NETS"],
-];
-
 export default function Game() {
+  const [scope, animate] = useAnimate();
+
   const [selected, setSelected] = React.useState<string[]>([]);
 
   const onSelect = (word: string) => {
-    if (selected.length < 4) {
-      setSelected([...selected, word]);
-    }
     if (selected.includes(word)) {
       setSelected(selected.filter((selectedWord) => selectedWord !== word));
+    } else if (selected.length < 4) {
+      setSelected([...selected, word]);
     }
   };
 
+  const isGuessComplete = selected.length === 4;
+  const isSelectionConnection = isConnection(selected);
+
+  React.useLayoutEffect(() => {
+    const runAnimation = async () => {
+      // bump up
+      await animate(
+        'button[aria-current="true"]',
+        { y: -10 },
+        {
+          delay: stagger(0.25, {
+            ease: "linear",
+            startDelay: 0.1,
+          }),
+        }
+      );
+      // bump down
+      await animate('button[aria-current="true"]', { y: 0 }, { delay: 0.3 });
+      if (!isSelectionConnection) {
+        await animate('button[aria-current="true"]', {
+          x: [-4, 5, -5, 4, -3, 1, 0],
+        });
+      }
+      setSelected([]);
+    };
+    if (isGuessComplete) {
+      runAnimation();
+    }
+  }, [isSelectionConnection, isGuessComplete, animate]);
+
   return (
     <main className={css.container}>
-      <h1>Connections</h1>
-      <section className={css.board}>
+      <h1 className={css.title}>Atonnections</h1>
+      <section ref={scope} className={css.board}>
         {startingBoard.map((row, i) =>
           row.map((word) => (
-            <div
+            <motion.button
+              whileTap={{
+                scale: 0.9,
+                transition: {
+                  duration: 0.1,
+                  ease: "easeOut",
+                },
+              }}
               onClick={() => {
-                onSelect(word);
+                if (!isGuessComplete) {
+                  onSelect(word);
+                }
               }}
               aria-current={selected.includes(word)}
               className={css.word}
               key={word}
             >
               {word}
-            </div>
+            </motion.button>
           ))
         )}
       </section>
