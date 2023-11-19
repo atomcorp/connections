@@ -18,8 +18,27 @@ export const answers = [
 ];
 
 export const startingBoard = [
-  ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
-  ["HEAT", "TAB", "BUCKS", "RETURN"],
+  {
+    connection: "",
+    words: ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
+  },
+  {
+    connection: "",
+    words: ["HEAT", "TAB", "BUCKS", "RETURN"],
+  },
+  {
+    connection: "",
+    words: ["JAZZ", "HAIL", "OPTION", "RAIN"],
+  },
+  {
+    connection: "",
+    words: ["SLEET", "RACE CAR", "MOM", "NETS"],
+  },
+];
+
+export const testBoard = [
   ["JAZZ", "HAIL", "OPTION", "RAIN"],
-  ["SLEET", "RACE CAR", "MOM", "NETS"],
+  ["SNOW", "KAYAK", "RACE CAR", "MOM"],
+  ["SLEET", "NETS", "LEVEL", "SHIFT"],
+  ["HEAT", "TAB", "BUCKS", "RETURN"],
 ];

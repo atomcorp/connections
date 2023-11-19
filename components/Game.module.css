@@ -40,3 +40,7 @@
 .word[aria-current="true"] {
   background: wheat;
 }
+
+.word[disabled] {
+  background: turquoise;
+}
