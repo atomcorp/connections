@@ -1,0 +1,33 @@
+.container {
+  max-width: 400px;
+  margin: 60px auto;
+}
+
+.board {
+  border: 1px solid white;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  gap: 6px;
+}
+
+.word {
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  background: lightslategray;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 700;
+  color: black;
+}
+
+.word[aria-current="true"] {
+  background: wheat;
+}
