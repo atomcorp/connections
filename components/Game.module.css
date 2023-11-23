@@ -1,6 +1,7 @@
 .container {
   max-width: 400px;
-  margin: 60px auto;
+  display: grid;
+  gap: 20px;
 }
 
 .title {
@@ -26,6 +27,7 @@
 .word {
   grid-row: var(--row);
   grid-column: var(--col);
+  font-size: 0.8rem;
   aspect-ratio: 1;
   display: grid;
   place-content: center;
@@ -45,6 +47,12 @@
 
 .word[disabled] {
   background: turquoise;
+}
+
+@media (min-width: 600px) {
+  .word {
+    font-size: 1rem;
+  }
 }
 
 .answer {
@@ -85,4 +93,15 @@
 
 .connection {
   text-decoration: underline;
+}
+
+.footer {
+  justify-self: self-end;
+}
+
+.reset {
+  padding: 8px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid;
 }

@@ -114,15 +114,6 @@ export default function Game() {
   return (
     <main className={css.container}>
       <h1 className={css.title}>Connectoms</h1>
-      <div>
-        <button
-          onClick={() => {
-            setBoard(startingBoard);
-          }}
-        >
-          Reset
-        </button>
-      </div>
       <LayoutGroup>
         <section ref={scope} className={css.board}>
           {board.map((row, rowIndex) => (
@@ -183,6 +174,16 @@ export default function Game() {
           ))}
         </section>
       </LayoutGroup>
+      <div className={css.footer}>
+        <button
+          className={css.reset}
+          onClick={() => {
+            setBoard(startingBoard);
+          }}
+        >
+          Reset
+        </button>
+      </div>
     </main>
   );
 }
