@@ -7,7 +7,7 @@ import { Board, answers, startingBoard } from "@/components/data";
 
 import css from "./Game.module.css";
 
-const isConnection = (selectedWords: string[]) => {
+const getConnection = (selectedWords: string[]) => {
   const connection = answers.find((answer) =>
     answer.words.every((word) => selectedWords.includes(word))
   );
@@ -15,6 +15,7 @@ const isConnection = (selectedWords: string[]) => {
   if (connection) {
     return connection.answer;
   }
+  return;
 };
 
 const updateBoard = (connection: string) => (formerBoard: Board) => {
@@ -76,7 +77,7 @@ export default function Game() {
   };
 
   const isGuessComplete = selected.length === 4;
-  const connection = isConnection(selected);
+  const connection = getConnection(selected);
 
   React.useLayoutEffect(() => {
     const runAnimation = async () => {

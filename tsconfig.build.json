@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "module": "esnext",
+    "target": "ES2017",
+    "lib": [ "es6", "dom" ],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "components",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"],
+  
+}
