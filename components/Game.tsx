@@ -79,7 +79,7 @@ export default function Game() {
   const isGuessComplete = selected.length === 4;
   const connection = getConnection(selected);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const runAnimation = async () => {
       // bump up
       await animate(
@@ -154,6 +154,7 @@ export default function Game() {
               })}
               {row.connection && (
                 <motion.div
+                  key={row.connection}
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0, 1],

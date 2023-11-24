@@ -19,11 +19,6 @@
   gap: 6px;
 }
 
-.row {
-  display: grid;
-  gap: 6px;
-}
-
 .word {
   grid-row: var(--row);
   grid-column: var(--col);
