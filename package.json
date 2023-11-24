@@ -1,13 +1,14 @@
 {
   "name": "@atomcorp/connections",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "private": false,
   "author": "atomcorp",
   "module": "true",
+  "main": "bundle/index.js",
   "files": [
     "bundle"
   ],
-  "types": "./types",
+  "types": "./index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -32,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "rollup": "^4.5.1",
+    "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "typescript": "^5"
   }
