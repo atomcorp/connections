@@ -1,14 +1,20 @@
 {
   "name": "@atomcorp/connections",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.1",
+  "private": false,
+  "author": "atomcorp",
   "module": "true",
+  "files": [
+    "bundle"
+  ],
+  "types": "./types",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "bundle": "rollup --config"
+    "bundle": "rollup --config",
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "framer-motion": "^10.16.5",

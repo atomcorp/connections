@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "declarationDir": "types",
+    "declarationDir": "bundle",
     "emitDeclarationOnly": true,
     "module": "esnext",
     "target": "ES2017",
