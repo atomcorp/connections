@@ -1,42 +1,32 @@
-export const answers = [
+export type Answer = {
+  words: string[];
+  connection: string;
+};
+
+export const answers: Answer[] = [
   {
     words: ["HAIL", "RAIN", "SLEET", "SNOW"],
-    answer: "WET WEATHER",
+    connection: "WET WEATHER",
   },
   {
     words: ["BUCKS", "HEAT", "JAZZ", "NETS"],
-    answer: "NBA TEAMS",
+    connection: "NBA TEAMS",
   },
   {
     words: ["OPTION", "RETURN", "SHIFT", "TAB"],
-    answer: "KEYBOARD KEYS",
+    connection: "KEYBOARD KEYS",
   },
   {
     words: ["KAYAK", "LEVEL", "MOM", "RACE CAR"],
-    answer: "PALINDROMES",
+    connection: "PALINDROMES",
   },
 ];
 
-export type Board = {
-  connection: string;
-  words: string[];
-}[];
+export type Board = string[][];
 
 export const startingBoard: Board = [
-  {
-    connection: "",
-    words: ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
-  },
-  {
-    connection: "",
-    words: ["HEAT", "TAB", "BUCKS", "RETURN"],
-  },
-  {
-    connection: "",
-    words: ["JAZZ", "HAIL", "OPTION", "RAIN"],
-  },
-  {
-    connection: "",
-    words: ["SLEET", "RACE CAR", "MOM", "NETS"],
-  },
+  ["SNOW", "LEVEL", "SHIFT", "KAYAK"],
+  ["HEAT", "TAB", "BUCKS", "RETURN"],
+  ["JAZZ", "HAIL", "OPTION", "RAIN"],
+  ["SLEET", "RACE CAR", "MOM", "NETS"],
 ];

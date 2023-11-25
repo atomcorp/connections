@@ -8,7 +8,7 @@
   "files": [
     "bundle"
   ],
-  "types": "./index.d.ts",
+  "types": "bundle/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
